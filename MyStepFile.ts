@@ -98,6 +98,34 @@ Then("User should Validate {string}", async function (element: string) {
     await loginPage.validateDropDownElement(element);
 });
 
+When("User enters the leave details {string}, {string}, {string}", async function (fromDate: string,toDate: string,comment: string) {
+    await loginPage.applyLeave( fromDate, toDate, comment);
+});
+
+Then("User should see the leave applied successfully message", async function () {
+    await loginPage.validateLeaveAppliedMessage();
+});
+
+Then("User should see the leave applied unsuccessfully message", async function () {
+    await loginPage.validateLeaveNotAppliedMessage();
+});
+
+Then("User should Validate the My Leave Page", async function () {
+    await loginPage.validateMyLeavePage();
+});
+
+When("User click on My List Button", async function () {
+    await fixture.page.getByRole('link', { name: 'My Leave' }).click();
+});
+
+
+Then("User fetch data from Table and Console it", async function () {
+    await fixture.page.waitForTimeout(2000);
+    const table = await loginPage.fetchDatafromTablemapColumn();
+    console.log(table);
+});
+
+
 
 
 
