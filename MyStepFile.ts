@@ -98,6 +98,65 @@ Then("User should Validate {string}", async function (element: string) {
     await loginPage.validateDropDownElement(element);
 });
 
+When("User enters the leave details {string}, {string}, {string}", async function (fromDate: string, toDate: string, comment: string) {
+    await loginPage.applyLeave(fromDate, toDate, comment);
+});
+
+Then("User should see the leave applied successfully message", async function () {
+    await loginPage.validateLeaveAppliedMessage();
+});
+
+Then("User should see the leave applied unsuccessfully message", async function () {
+    await loginPage.validateLeaveNotAppliedMessage();
+});
+
+Then("User should Validate the My Leave Page", async function () {
+    await loginPage.validateMyLeavePage();
+});
+
+When("User click on My List Button", async function () {
+    await fixture.page.getByRole('link', { name: 'My Leave' }).click();
+});
+
+
+Then("User fetch data from Table and Console it", async function () {
+    await fixture.page.waitForTimeout(2000);
+    const table = await loginPage.fetchDatafromTablemapColumn();
+    console.log(table);
+});
+
+When("User click on drop down Button in My Leave of {string}", async function (comment: string) {
+    await fixture.page.getByRole('row', { name: comment }).getByRole('button', { name: '' }).click();
+});
+
+When("User click on Write a comment Button", async function () {
+    await fixture.page.getByText('Add Comment').click();
+});
+
+When("User enters the comment {string} and click on Submit Button", async function (comment: string) {
+    await fixture.page.getByPlaceholder('Comment here').fill(comment);
+    await fixture.page.getByRole('button', { name: 'Save' }).click();
+});
+
+Then("User should see the comment added successfully message", async function () {
+    const locators = [
+        fixture.page.getByText('Success', { exact: true }),
+    ];
+    await validation.ValidateWebElements(locators);
+});
+
+When("User click on Cancel Leave Button of {string}", async function (comment: string) {
+    await fixture.page.getByRole('row', { name: comment }).getByRole('button', { name: 'Cancel' }).click();
+});
+
+Then("User should see the leave cancelled successfully message", async function () {
+    const locators = [
+        fixture.page.getByText('Successfully Updated'),
+    ];
+    await validation.ValidateWebElements(locators);
+});
+
+
 
 
 

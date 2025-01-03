@@ -90,7 +90,7 @@ export default class myLoginPage {
     }
 
     async validateleavePage() {
-        const locators = [
+        const locators1 = [
             fixture.page.getByRole('heading', { name: 'Leave List' }),
             fixture.page.getByText('From Date'),
             fixture.page.getByPlaceholder('yyyy-dd-mm').first(),
@@ -98,17 +98,65 @@ export default class myLoginPage {
             fixture.page.getByPlaceholder('yyyy-dd-mm').nth(1),
             fixture.page.getByText('Show Leave with Status'),
             fixture.page.getByText('-- Select --').first(),
+        ];
+        await validation.ValidateWebElements(locators1);
+        await fixture.page.locator('.oxd-select-text--after > .oxd-icon').first().click();
+        const locators12 = [
+            fixture.page.getByRole('option', { name: 'Rejected' }),
+            fixture.page.getByRole('option', { name: 'Cancelled' }),
+            fixture.page.getByText('Scheduled'),
+            fixture.page.getByRole('option', { name: 'Taken' }),
+        ];
+        await validation.ValidateWebElements(locators12);
+        const locators2 = [
             fixture.page.locator('label').filter({ hasText: 'Leave Type' }),
             fixture.page.getByText('-- Select --').nth(1),
+        ];
+        await validation.ValidateWebElements(locators2);
+        await fixture.page.locator('.oxd-select-wrapper > .oxd-select-text > .oxd-select-text--after > .oxd-icon').first().click();
+        const locators22 = [
+            fixture.page.getByRole('option', { name: 'CAN - FMLA' }).getByText('CAN - FMLA'),
+            fixture.page.getByText('CAN - Matternity'),
+            fixture.page.getByText('CAN - Personal'),
+            fixture.page.getByText('CAN - Vacation'),
+            fixture.page.getByText('US - Bereavement'),
+            fixture.page.getByRole('option', { name: 'US - FMLA' }),
+            fixture.page.getByText('US - Matternity'),
+            fixture.page.getByText('US - Personal'),
+            fixture.page.getByText('US - Vacation'),
+        ];
+        await validation.ValidateWebElements(locators22);
+        const locators3 = [
             fixture.page.locator('label').filter({ hasText: 'Employee Name' }),
             fixture.page.getByPlaceholder('Type for hints...'),
             fixture.page.getByText('Sub Unit'),
             fixture.page.getByText('-- Select --').nth(2),
+        ];
+        await validation.ValidateWebElements(locators3);
+        await fixture.page.locator('div:nth-child(2) > .oxd-input-group > div:nth-child(2) > .oxd-select-wrapper > .oxd-select-text > .oxd-select-text--after > .oxd-icon').click();
+        const locators32 = [
+            fixture.page.getByText('Administration'),
+            fixture.page.getByRole('option', { name: 'Engineering' }),
+            fixture.page.getByText('Development'),
+            fixture.page.getByText('Quality Assurance'),
+            fixture.page.getByRole('option', { name: 'TechOps' }),
+            fixture.page.getByText('Sales & Marketing'),
+            fixture.page.getByRole('option', { name: 'Sales', exact: true }),
+            fixture.page.getByText('Marketing', { exact: true }),
+            fixture.page.getByText('Client Services'),
+            fixture.page.getByRole('option', { name: 'Technical Support' }),
+            fixture.page.getByRole('option', { name: 'Finance' }),
+            fixture.page.getByText('Human Resources'),
+            fixture.page.getByRole('option', { name: 'hola' }),
+            fixture.page.getByRole('option', { name: 'juan perez' }),
+        ];
+        await validation.ValidateWebElements(locators32);
+        const locators4 = [
             fixture.page.getByText('Include Past Employees'),
             fixture.page.getByRole('button', { name: 'Reset' }),
             fixture.page.getByRole('button', { name: 'Search' })
         ];
-        await validation.ValidateWebElements(locators);
+        await validation.ValidateWebElements(locators4);
     }
 
     async validatelogout() {
@@ -163,5 +211,133 @@ export default class myLoginPage {
         }
     }
 
+    async applyLeave(fromDate: string, toDate: string, comment: string) {
+        await fixture.page.getByText('Leave Type').click();
+        await fixture.page.locator('form i').first().click();
+        await fixture.page.getByRole('option', { name: 'CAN - FMLA' }).click();
+        await fixture.page.getByPlaceholder('yyyy-dd-mm').first().click();
+        await fixture.page.getByPlaceholder('yyyy-dd-mm').first().fill(fromDate);
+        await fixture.page.getByPlaceholder('yyyy-dd-mm').nth(1).click();
+        await fixture.page.getByPlaceholder('yyyy-dd-mm').nth(1).fill(toDate);
+        await fixture.page.locator('textarea').fill(comment);
+        await fixture.page.getByRole('button', { name: 'Apply' }).click();
+    }
 
+
+    async validateLeaveAppliedMessage() {
+        const locators = [
+            fixture.page.getByText('Successfully Saved'),
+        ];
+        await validation.ValidateWebElements(locators);
+    }
+
+    async validateLeaveNotAppliedMessage() {
+        const locators = [
+            fixture.page.getByText('Error'),
+        ];
+        await validation.ValidateWebElements(locators);
+    }
+
+
+    async validateMyLeavePage() {
+        const locators1 = [
+            fixture.page.getByRole('heading', { name: 'My Leave List' }),
+            fixture.page.getByText('From Date'),
+            fixture.page.getByPlaceholder('dd-mm-yyyy').first(),
+            fixture.page.getByText('To Date'),
+            fixture.page.getByPlaceholder('dd-mm-yyyy').nth(1),
+            fixture.page.getByText('Show Leave with Status'),
+            fixture.page.locator('label').filter({ hasText: 'Leave Type' })
+        ];
+        await validation.ValidateWebElements(locators1);
+        await fixture.page.locator('.oxd-select-wrapper > .oxd-select-text > .oxd-select-text--after > .oxd-icon').click();
+        const locators12 = [
+            fixture.page.getByRole('option', { name: 'CAN - FMLA' }).getByText('CAN - FMLA'),
+            fixture.page.getByText('US - Bereavement'),
+            fixture.page.getByText('US - FMLA'),
+            fixture.page.getByText('US - Personal'),
+            fixture.page.getByText('US - Vacation')
+        ];
+        await validation.ValidateWebElements(locators12);
+        const locators2 = [
+            fixture.page.getByRole('button', { name: 'Reset' }),
+            fixture.page.getByRole('button', { name: 'Search' })
+        ];
+        await validation.ValidateWebElements(locators2);
+    }
+
+    async fetchDatafromTable() {
+        const tableData: string[][] = [];
+        const rows = await fixture.page.locator('.oxd-table-row.oxd-table-row--with-border').all();
+        for (const row of rows) {
+            const headers = await row.locator('.oxd-table-header-cell.oxd-padding-cell.oxd-table-th').all();
+            const headersData = [];
+            for (const cell of headers) {
+                headersData.push(await cell.innerText());
+            }
+            tableData.push(headersData);
+
+            const cells = await row.locator('.oxd-table-cell.oxd-padding-cell').all();
+            const rowsData: string[] = [];
+            for (const cell of cells) {
+                rowsData.push(await cell.innerText())
+            }
+            if (rowsData.length > 0) {
+                tableData.push(rowsData);
+            }
+        }
+        return tableData;
+    }
+
+
+    async fetchDatafromTablemap() {
+        const tableData: string[][] = [];
+        const rows = await fixture.page.locator('.oxd-table-row.oxd-table-row--with-border').all();
+
+        const headersData = await Promise.all(rows.map(async row => {
+            const headers = await row.locator('.oxd-table-header-cell.oxd-padding-cell.oxd-table-th').all();
+            return Promise.all(headers.map(async cell => await cell.innerText()));
+        }));
+        tableData.push(...headersData);
+
+        const rowsData = await Promise.all(rows.map(async row => {
+            const cells = await row.locator('.oxd-table-cell.oxd-padding-cell').all();
+            return Promise.all(cells.map(async cell => await cell.innerText()));
+        }));
+        tableData.push(...rowsData.filter(row => row.length > 0));
+
+        return tableData;
+    }
+
+    async fetchDatafromTablemapColumn() {
+        const tableData: string[][] = [];
+        const rows = await fixture.page.locator('.oxd-table-row.oxd-table-row--with-border').all();
+
+        const headers = await rows[0].locator('.oxd-table-header-cell.oxd-padding-cell.oxd-table-th').all();
+        const headersData = await Promise.all(headers.map(async cell => await cell.innerText()));
+        tableData.push(headersData);
+
+        const columnsData: string[][] = headersData.map(() => []);
+
+        for (const row of rows) {
+            const cells = await row.locator('.oxd-table-cell.oxd-padding-cell').all();
+            const cellsData = await Promise.all(cells.map(async cell => await cell.innerText()));
+            cellsData.forEach((cellData, index) => {
+                columnsData[index].push(cellData);
+            });
+        }
+
+        columnsData.forEach(column => {
+            tableData.push(column);
+        });
+
+        // return tableData;
+        const tableDataMap = new Map<string, string[]>();
+
+        headersData.forEach((header, index) => {
+            tableDataMap.set(header, columnsData[index]);
+        });
+
+        return tableDataMap;
+    }
 }
